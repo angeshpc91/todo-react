@@ -61,8 +61,6 @@ function Todo(props) {
       "completed": false
     })
 
-    console.log(TodoListVal)
-
     setOpenDialog(false)
     handleSnackbarClick('success', 'TODO ' + msg + ' Added')
   }
