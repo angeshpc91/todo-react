@@ -1,15 +1,15 @@
 import { TODO_LIST, TODO_LIST_FAILURE, TODO_LIST_LOADING } from './Todo.actionConstants'
 
-export const getTodoList = (URL) => ({
+const getTodoList = (URL) => ({
   type: TODO_LIST,
   payload: URL
 })
 
-export const loadingTodo = () => ({
+const loadingTodo = () => ({
   type: TODO_LIST_LOADING
 })
 
-export const failureTodo = () => ({
+const failureTodo = () => ({
   type: TODO_LIST_FAILURE
 })
 

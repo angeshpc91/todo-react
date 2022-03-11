@@ -7,11 +7,12 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { connect } from 'react-redux';
 
-export default function TodoList(props) {
+function TodoList(props) {
   const [checked, setChecked] = React.useState([0]);
 
-  const { handleSnackbarClick, todoValList, dispatchVal } = props
+  const { handleSnackbarClick, TodoReducer: { TodoList: TodoListVal } } = props
   const toggleTodo = (value) => () => {
     const currentIndex = value.id;
 
@@ -24,19 +25,20 @@ export default function TodoList(props) {
     }
 
     setChecked(newChecked);
+    handleSnackbarClick('info', "TODO " + value.title + " " + (value.completed ? 'Completed' : 'Restored'))
   };
 
   const handleDelete = (val) => {
-    const arrVal = todoValList
-    const currentIndex = arrVal.findIndex((valx) => valx.id === val.id)
-    arrVal.splice(currentIndex, 1)
-    // dispatchVal(arrVal)
+    const currentIndex = TodoListVal.findIndex((valx) => valx.id === val.id)
+
+    TodoListVal.splice(currentIndex, 1)
+    // dispatch(addDeleteUpdateNoteData(TodoListVal))
     handleSnackbarClick('error', 'Deleted ' + val.title)
   }
 
   return (
     <List sx={{ width: '100%', maxWidth: 768, bgcolor: 'background.paper' }}>
-      {props.todoValList.map((value) => {
+      {TodoListVal.map((value) => {
         const labelId = `checkbox-list-label-${value.id}`;
 
         return (
@@ -67,3 +69,10 @@ export default function TodoList(props) {
     </List >
   );
 }
+
+function mapStateToProps(state) {
+  const { TodoReducer } = state
+  return { TodoReducer }
+}
+
+export default connect(mapStateToProps)(TodoList)
